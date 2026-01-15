@@ -1,0 +1,21 @@
+{
+    "name": "dis-fx/fx-nucleus",
+    "description": "Sovereign core for FictionX framework - 100% Omani-owned code",
+    "type": "library",
+    "require": {
+        "php": "8.1"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "DisFx\\FxNucleus\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Ahmad Munib",
+            "email": "94528926+ahmadmunib@users.noreply.github.com"
+        }
+    ],
+    "minimum-stability": "dev"
+}
