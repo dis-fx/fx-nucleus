@@ -1,0 +1,10 @@
+# DIS .gitignore template
+/vendor/
+composer.lock
+.env
+public/build/
+node_modules/
+.idea/
+.vscode/
+.windsurf/
+*.log
