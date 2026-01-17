@@ -2,20 +2,36 @@
     "name": "dis-fx/fx-nucleus",
     "description": "Sovereign core for FictionX framework - 100% Omani-owned code",
     "type": "library",
-    "require": {
-        "php": "8.1"
+    "license": "proprietary",
+    "homepage": "https://github.com/dis-fx/fx-nucleus",
+    "support": {
+        "email": "framework@digitalintelligentsolutions.om"
     },
-    "license": "MIT",
+    "require": {},
+    "require-dev": {},
     "autoload": {
         "psr-4": {
-            "DisFx\\FxNucleus\\": "src/"
-        }
+            "Dis\\FictionX\\Nucleus\\": "src/"
+        },
+        "files": [
+            "src/helpers.php"
+        ]
     },
-    "authors": [
-        {
-            "name": "Ahmad Munib",
-            "email": "94528926+ahmadmunib@users.noreply.github.com"
-        }
-    ],
-    "minimum-stability": "dev"
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": false
+    },
+    "conflict": {
+        "symfony/*": "*",
+        "illuminate/*": "*",
+        "monolog/*": "*",
+        "nesbot/carbon": "*"
+    },
+    "scripts": {
+        "post-autoload-dump": [
+            "echo 'DIS WARNING: This framework contains sovereign code owned by Digital Intelligent Solutions LLC (Muscat, Oman)'"
+        ]
+    }
 }
