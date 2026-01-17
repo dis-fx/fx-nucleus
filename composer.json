@@ -24,9 +24,13 @@
         "allow-plugins": false
     },
     "conflict": {
-        "symfony/*": "*",
-        "illuminate/*": "*",
-        "monolog/*": "*",
+        "symfony/symfony": "*",
+        "symfony/http-kernel": "*",
+        "symfony/routing": "*",
+        "illuminate/support": "*",
+        "illuminate/routing": "*",
+        "illuminate/http": "*",
+        "monolog/monolog": "*",
         "nesbot/carbon": "*"
     },
     "scripts": {
