@@ -1,6 +1,9 @@
 <?php
+// DIS PROPRIETARY CODE - NO THIRD-PARTY DEPENDENCIES
+// © 2026 Digital Intelligence Solutions LLC, Muscat, Oman
 // src/Autoloader.php
 // DIS_LICENSE.txt HEADER REQUIRED ABOVE THIS LINE
+declare(strict_types=1);
 namespace Dis\FictionX\Nucleus;
 
 final class Autoloader
