@@ -47,6 +47,36 @@ if (!function_exists('env_safe')) {
      */
     function env_safe(string $key, $default = null): mixed
     {
+        static $loaded = false;
+
+        // Lazy load .env once if FX_ROOT is defined
+        if (!$loaded && defined('FX_ROOT')) {
+            $envPath = rtrim(FX_ROOT, '/\\') . '/.env';
+
+            // Simple traversal guard
+            if (strpos($envPath, '..') !== false) {
+                fx_abort(500, 'Invalid env path');
+            }
+
+            if (is_file($envPath)) {
+                $vars = parse_ini_file($envPath, false, INI_SCANNER_RAW);
+                if ($vars !== false) {
+                    foreach ($vars as $k => $v) {
+                        $k = trim((string)$k);
+                        if ($k === '') {
+                            continue;
+                        }
+                        $v = is_string($v) ? trim($v) : $v;
+                        putenv($k . '=' . $v);
+                        $_ENV[$k] = $v;
+                        $_SERVER[$k] = $v;
+                    }
+                }
+            }
+
+            $loaded = true;
+        }
+
         $value = getenv($key);
         if ($value === false) {
             return $default;
