@@ -32,7 +32,7 @@ if (!function_exists('asset')) {
      */
     function asset(string $path): string
     {
-        if (preg_match('/\.{2}[\\\/]/', $path)) {
+        if (preg_match('#\.\.[/\\\\]#', $path)) {
             fx_abort(400, 'Invalid asset path');
         }
 
@@ -71,7 +71,7 @@ if (!function_exists('config')) {
 
         $configPath = rtrim(FX_ROOT, '/\\') . '/config/app.php';
 
-        if (preg_match('/\.{2}[\\\/]/', $configPath)) {
+        if (preg_match('#\.\.[/\\\\]#', $configPath)) {
             fx_abort(500, 'Invalid config path');
         }
 
