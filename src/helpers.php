@@ -121,4 +121,52 @@ if (!function_exists('config')) {
     }
 }
 
-// TODO: add router-aware helpers (route(), redirect()) once router package is ready.
+if (!function_exists('route')) {
+    /**
+     * SECURITY: Build a safe route URL by replacing {param} tokens and rejecting traversal.
+     */
+    function route(string $path, array $params = []): string
+    {
+        if (preg_match('#\.{2}[\\/]#', $path)) {
+            fx_abort(400, 'Invalid route path');
+        }
+
+        $resolved = $path;
+        foreach ($params as $key => $value) {
+            $token = '{' . $key . '}';
+            if (str_contains($resolved, $token)) {
+                $resolved = str_replace($token, rawurlencode((string)$value), $resolved);
+                unset($params[$key]);
+            }
+        }
+
+        // Append remaining params as query string
+        if (!empty($params)) {
+            $resolved .= (str_contains($resolved, '?') ? '&' : '?') . http_build_query($params);
+        }
+
+        // Normalize leading slash
+        return '/' . ltrim(preg_replace('#/+#', '/', $resolved) ?: '/', '/');
+    }
+}
+
+if (!function_exists('redirect')) {
+    /**
+     * SECURITY: Redirect to a safe route; uses fx-router Response if available.
+     */
+    function redirect(string $path, int $status = 302, array $params = [])
+    {
+        $url = route($path, $params);
+
+        // If fx-router Response exists, return it to allow caller to send later.
+        if (class_exists('Dis\\FictionX\\Router\\Response')) {
+            /** @var class-string $respClass */
+            $respClass = 'Dis\\FictionX\\Router\\Response';
+            return $respClass::text('', $status, ['Location' => $url]);
+        }
+
+        // Fallback: immediate header emit and exit.
+        header('Location: ' . $url, true, $status);
+        exit;
+    }
+}
